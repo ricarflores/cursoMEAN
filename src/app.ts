@@ -4,7 +4,7 @@ import http from "http"
 import io from "socket.io" 
 import {Server as Main} from './interfaces/'
 import Routes from './lib/routes'
-
+import { Connect } from './config/'
 const app = express(),
     server = new http.Server(app),
     host = "localhost"
@@ -28,7 +28,7 @@ class Server {
         new Routes(this.main.app, this.main.socket).routesCongif()
     }
     initDB(){
-
+        new Connect('mongodb+srv://ricardoFlores:digimon3000@cursomean-6ovvb.mongodb.net/test?retryWrites=true&w=majority').connection()
     }
     appExecute(){
         this.appConfig()

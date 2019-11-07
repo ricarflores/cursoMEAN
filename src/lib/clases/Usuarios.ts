@@ -6,14 +6,15 @@ export default class Usuario{
     private userType: IUsuarios["userType"];
     private createdAt : IUsuarios["createdAt"];
     private updatedAt : IUsuarios["updatedAt"];
-
+    private userName: IUsuarios["userName"];
     constructor(body:IUsuarios){
-        const { email,password,userType } = body;
+        const { email, userName, password , userType, createdAt , updatedAt } = body;
         this.email = email;
         this.password = password
-        this.createdAt = Date.now();
+        this.createdAt = createdAt;
         this.userType = userType;
-        this.updatedAt = Date.now();
+        this.updatedAt = updatedAt;
+        this.userName = userName;
     }
     listUsuario(){
         

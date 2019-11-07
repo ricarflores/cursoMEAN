@@ -15,7 +15,7 @@ const updateUsuario = (req:Request, res:Response):void =>{
 
 }
 const deleteUsuario = (req:Request, res:Response):void =>{
-
+    
 }
 export{
     getUsuario,
