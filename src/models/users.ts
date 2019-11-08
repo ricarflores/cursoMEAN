@@ -1,8 +1,9 @@
 import mongoose, { Schema, Document } from "mongoose";
-//import umiqueValidator from "mongoose-unique-validator";
-//import bycryp from "bycryp";
+import uniqueValidator from "mongoose-unique-validator";
+import bcrypt from "bcrypt";
 
-import { Usuairos as IUsuario } from '../interfaces';
+import { Usuarios as IUsuario } from '../interfaces';
+import mongooseUniqueValidator from "mongoose-unique-validator";
 
 const userSchema : Schema = new Schema({
     email:{
@@ -13,7 +14,7 @@ const userSchema : Schema = new Schema({
         trim:true,
         index:true
     },
-    userName:{
+    username:{
         type:String,
         required:[true,"username ya existe"],
         unique:true,
@@ -24,7 +25,7 @@ const userSchema : Schema = new Schema({
         required:[true,"password requerido"],
     },
     userType:{
-        tyoe:String,
+        type:String,
         enum:[
             'admin',
             'vendedor',
@@ -49,5 +50,20 @@ const userSchema : Schema = new Schema({
         default:false
     }
 });
+userSchema.plugin(uniqueValidator, {message:"Ya existe"});
 
-export default mongoose.model<IUsuario>('User', userSchema)
+userSchema.pre("save", function(next)
+{
+    let _this: any = this;
+    if(_this.password){
+        bcrypt.hash(_this.password,10,(err,has)=>{
+            if(err) return next(err)
+            else{
+                _this.password = has
+                next()
+            }
+        })
+    } else next()
+})
+
+export default mongoose.model<IUsuario>("User", userSchema);

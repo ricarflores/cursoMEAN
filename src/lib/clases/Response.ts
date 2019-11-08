@@ -1,4 +1,4 @@
-import {Usuairos as IUsuarios, UsuarioResponse, Error} from '../../interfaces'
+import {Usuarios as IUsuarios, UsuarioResponse, Error} from '../../interfaces'
 export default class Response{
     private usuario : IUsuarios | IUsuarios[] | null | {};
     private method : string;

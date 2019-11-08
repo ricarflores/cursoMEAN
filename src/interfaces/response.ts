@@ -1,8 +1,8 @@
-import { Usuairos } from "./"
+import { Usuarios } from "./"
 interface UsuarioResponse{
     code:number;
     error:boolean;
-    data:Usuairos | Usuairos[] | null | {};
+    data:Usuarios | Usuarios[] | null | {};
     message: Error[] | string;
 }
 
