@@ -14,7 +14,7 @@ export default class Routes{
 
     }
     appRoutes(){
-        this.app.get("/v1/", (req:Request, res:Response) => res.status(200).send(":v"))
+        //this.app.get("/v1/", (req:Request, res:Response) => res.status(200).send(":v"))
         this.app.get("/v1/",listUsuario)
         this.app.get("/v1/:id",Params,getUser)
         this.app.post("/v1/", postUser)
