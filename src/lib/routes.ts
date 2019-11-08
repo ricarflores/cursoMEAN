@@ -14,12 +14,12 @@ export default class Routes{
 
     }
     appRoutes(){
-        this.app.get("/v1", (req:Request, res:Response) => res.status(200).send(":v"))
-        this.app.get("/",listUsuario)
-        this.app.get("/:id",Params,getUser)
-        this.app.post("/", postUser)
-        this.app.put("/:id",Params,putUser)
-        this.app.delete("/:id",Params,deleteUser)
+        this.app.get("/v1/", (req:Request, res:Response) => res.status(200).send(":v"))
+        this.app.get("/v1/",listUsuario)
+        this.app.get("/v1/:id",Params,getUser)
+        this.app.post("/v1/", postUser)
+        this.app.put("/v1/:id",Params,putUser)
+        this.app.delete("/v1/:id",Params,deleteUser)
     }
     socketRoutes(){
 
