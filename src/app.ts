@@ -4,7 +4,8 @@ import http from "http"
 import io from "socket.io" 
 import {Server as Main} from './interfaces/'
 import Routes from './lib/routes'
-import { Connect } from './config/'
+import { Connect } from './config/';
+import cors from 'cors'
 const app = express(),
     server = new http.Server(app),
     host = "localhost"
