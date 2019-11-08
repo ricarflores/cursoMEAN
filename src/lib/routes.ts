@@ -14,6 +14,7 @@ export default class Routes{
 
     }
     appRoutes(){
+        
         this.app.get("/",listUsuario)
         this.app.get("/:id",Params,getUser)
         this.app.post("/", postUser)

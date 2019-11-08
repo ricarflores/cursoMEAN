@@ -48,7 +48,7 @@ export default class Usuario
         const critera = (id) ? {_id:id} : {}
 
         return MUser.find(critera)
-            .then( u => (u && u.length>1) ? u : (id && u[0]._id) ? u[0]: u)
+            .then( u => (u && u.length<1) ? {} : (id && u[0]._id) ? u[0]: u)
             .catch(e => e)
     }
     post(): Promise <IUsuarios | Error[]>{
@@ -82,7 +82,7 @@ export default class Usuario
     delete(id: Types.ObjectId)
     {
         const critera = (id) ? {_id:id} : {}
-        return MUser.deleteOne(id)
+        return MUser.deleteOne(critera)
             .then(user => user)
             .catch(err =>err)
     }
