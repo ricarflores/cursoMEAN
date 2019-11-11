@@ -2,6 +2,7 @@ import {Usuarios as IUsuarios} from '../../interfaces/'
 import { User as MUser } from '../../models/';
 import { Types } from 'mongoose';
 import { threadId } from 'worker_threads';
+import bcrypt from 'bcrypt'
 
 
 interface IUserInput
@@ -44,8 +45,12 @@ export default class Usuario
             })
         })
     }
-    Get(id?:Types.ObjectId){
-        const critera = (id) ? {_id:id} : {}
+    Get(id?:Types.ObjectId | string){
+        const critera = (id) 
+                        ? (typeof id === "string") 
+                            ? {"email": id}
+                            : {_id:id}
+                        : {}
 
         return MUser.find(critera)
             .then( u => (u && u.length<1) ? {} : (id && u[0]._id) ? u[0]: u)
@@ -85,5 +90,22 @@ export default class Usuario
         return MUser.deleteOne(critera)
             .then(user => user)
             .catch(err =>err)
+    }
+
+    Login(value: Types.ObjectId | string){
+        return this.Get(value)
+            .then((user:IUsuarios) =>{
+                
+                if(user && user._id ){
+                    return bcrypt.compareSync(this.password, user.password)
+                }else{
+                    return false;
+                }
+                
+            })
+            .catch((err:Error[])=>{
+                console.log("Errors: ", err)
+                return false;
+            })
     }
 }

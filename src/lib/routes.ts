@@ -6,7 +6,8 @@ import {
     postUser,
     putUser,
     getUser,
-    deleteUser
+    deleteUser,
+    login
 } from '../lib/controler';
 import { Params } from '../lib/midlewares/params'
 export default class Routes{
@@ -20,6 +21,7 @@ export default class Routes{
         this.app.post("/v1/", postUser)
         this.app.put("/v1/:id",Params,putUser)
         this.app.delete("/v1/:id",Params,deleteUser)
+        this.app.post("/v1/:email/login", login)
     }
     socketRoutes(){
 

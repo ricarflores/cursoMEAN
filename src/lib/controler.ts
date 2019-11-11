@@ -22,7 +22,6 @@ const deleteUser = (req:Request, res:Response):void =>{
         })
 }
 const listUsuario = (req:Request, res:Response):void =>{
-    console.log("list Users")
     let user:Usuarios = new Usuarios(req.body);
     user.Get()
         .then((u)=>{
@@ -86,6 +85,12 @@ const postUser = (req:Request, res:Response):void =>{
             res.status(response.getStatusCode()).json(response.data())
         }) 
 }
+const login = (req:Request, res:Response):void =>{
+    let user:Usuarios = new Usuarios(req.body)
+    user.Login(req.params.email)
+        .then(valid => res.status(200).json(valid))
+        .catch(err => res.status(404).json(false))
+}
  
 export{
     getUsuario,
@@ -93,5 +98,6 @@ export{
     postUser,
     putUser,
     getUser,
-    deleteUser
+    deleteUser,
+    login
 }
