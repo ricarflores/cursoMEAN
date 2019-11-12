@@ -3,6 +3,7 @@ import { User as MUser } from '../../models/';
 import { Types } from 'mongoose';
 import { threadId } from 'worker_threads';
 import bcrypt from 'bcrypt'
+import e from 'cors';
 
 
 interface IUserInput
@@ -97,15 +98,19 @@ export default class Usuario
             .then((user:IUsuarios) =>{
                 
                 if(user && user._id ){
-                    return bcrypt.compareSync(this.password, user.password)
+                    //return bcrypt.compareSync(this.password, user.password)
+                    if(bcrypt.compareSync(this.password, user.password))
+                        return user
+                    else
+                        return {}
                 }else{
-                    return false;
+                    return {};
                 }
                 
             })
             .catch((err:Error[])=>{
                 console.log("Errors: ", err)
-                return false;
+                return {};
             })
     }
 }

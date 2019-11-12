@@ -88,8 +88,14 @@ const postUser = (req:Request, res:Response):void =>{
 const login = (req:Request, res:Response):void =>{
     let user:Usuarios = new Usuarios(req.body)
     user.Login(req.params.email)
-        .then(valid => res.status(200).json(valid))
-        .catch(err => res.status(404).json(false))
+        .then((user)=>{
+            const response  = new R(user,req.method)
+            res.status(response.getStatusCode()).json(response.data())
+        })
+        .catch((err)=>{
+            const response  = new R({},req.method,err)
+            res.status(response.getStatusCode()).json(response.data())
+        })
 }
  
 export{
