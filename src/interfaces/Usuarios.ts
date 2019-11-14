@@ -7,7 +7,6 @@ interface Usuarios extends Document{
     createdAt:number;
     updatedAt:number;
     active:boolean;
-    token?:any;
 }
 export{
     Usuarios

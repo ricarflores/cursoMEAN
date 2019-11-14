@@ -88,10 +88,13 @@ const postUser = (req:Request, res:Response):void =>{
 const login = (req:Request, res:Response):void =>{
     let user:Usuarios = new Usuarios(req.body)
     user.Login(req.params.email)
-        .then((user)=>{
+        .then((user:any)=>{
             //console.log(user.token)
-            const response  = new R(user,req.method)
-            res.status(response.getStatusCode()).json(response.data())
+            console.log(user.user)
+            const response  = new R(user.user,req.method)
+            let r:any = response.data();
+            r.token= user.token
+            res.status(response.getStatusCode()).json(r)
         })
         .catch((err)=>{
             const response  = new R({},req.method,err)

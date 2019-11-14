@@ -95,27 +95,24 @@ export default class Usuario
     }
     generateJWT(user:IUsuarios){
         const token = jwt.sign({user:user},variables.secretKey,{expiresIn:600000});
-        
         return token;
-        
     }
     Login(value: Types.ObjectId | string){
         return this.Get(value)
-            .then((user) =>{
-                
+            .then(async(user) =>
+            {
                 if(user && user._id ){
-                    //return bcrypt.compareSync(this.password, user.password)
                     if(bcrypt.compareSync(this.password, user.password))
                     {
-                        user['token'] = this.generateJWT(user);
-                        return user
+                        const token = await this.generateJWT(user)
+                        return {user, token}
                     }
                     else
                         return {}
                 }else{
                     return {};
                 }
-                
+                 
             })
             .catch((err:Error[])=>{
                 console.log("Errors: ", err)
