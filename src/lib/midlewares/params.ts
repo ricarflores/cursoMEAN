@@ -16,7 +16,13 @@ const Params = (req: Request,res:Response, next: NextFunction) =>{
         res.status(500).send("Id Incorrecto")
     }
 }
+const jsonParams = (req: Request,res:Response, next: NextFunction) =>{
+    const jwt = req.query;
+    console.log(jwt)
+    next()
+}
 
 export{
-    Params
+    Params,
+    jsonParams
 }
