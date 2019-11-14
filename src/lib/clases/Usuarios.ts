@@ -4,7 +4,8 @@ import { Types } from 'mongoose';
 import { threadId } from 'worker_threads';
 import bcrypt from 'bcrypt'
 import e from 'cors';
-
+import jwt from 'jsonwebtoken'
+import { variables } from './../../config/'
 
 interface IUserInput
 {
@@ -92,15 +93,23 @@ export default class Usuario
             .then(user => user)
             .catch(err =>err)
     }
-
+    generateJWT(user:IUsuarios){
+        const token = jwt.sign({user:user},variables.secretKey,{expiresIn:600000});
+        
+        return token;
+        
+    }
     Login(value: Types.ObjectId | string){
         return this.Get(value)
-            .then((user:IUsuarios) =>{
+            .then((user) =>{
                 
                 if(user && user._id ){
                     //return bcrypt.compareSync(this.password, user.password)
                     if(bcrypt.compareSync(this.password, user.password))
+                    {
+                        user['token'] = this.generateJWT(user);
                         return user
+                    }
                     else
                         return {}
                 }else{

@@ -89,6 +89,7 @@ const login = (req:Request, res:Response):void =>{
     let user:Usuarios = new Usuarios(req.body)
     user.Login(req.params.email)
         .then((user)=>{
+            //console.log(user.token)
             const response  = new R(user,req.method)
             res.status(response.getStatusCode()).json(response.data())
         })
